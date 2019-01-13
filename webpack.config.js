@@ -1,6 +1,7 @@
 module.exports = {
     mode: "development",
     devServer: {
+        // this line tells webpack to load the index.html from folder dis
         contentBase: "./dist"
     },
 
@@ -13,4 +14,4 @@ module.exports = {
             }
         ]
     }
-}
+};

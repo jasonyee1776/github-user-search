@@ -15,6 +15,7 @@
         }
 
         li {
+            list-style: none;
             background: #cdc;
             padding: 1em;
             margin: 1em;
@@ -29,7 +30,9 @@
         <h2>Find Github Users</h2>
         <label for="search">Type Username</label>
         <input type="text" name="search" placeholder='Enter Github Username'>
-        <button type="submit" class="button-primary">Submit</button>   
+        <div>
+            <button type="submit" class="button-primary">Submit</button>
+        </div>
     </form>
     <div id="root"></div>
     <script src='main.js'></script>

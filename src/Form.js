@@ -11,7 +11,6 @@ class Form {
         this.addCard = addCard;
         this.API_URL = '';
         this.searchTerm = '';
-        // constructor() is where one declares variables
         // to create a variable...
         // one does NOT use const, let, var, etc
         // must put variables on the "this" value
@@ -19,16 +18,24 @@ class Form {
         // add an event listener to the newly established variable
         this.searchInput.addEventListener('keyup', () => {this.handleKeyup(event)});
         this.submitButton = document.querySelector("button[type='submit']");
-    // Prevent user from submitting an empty input ---> 2 WAYS
-    // 1st - use an if statment when input value is an empty string and disable button
-        // if (this.searchInput === '') {
-        //     this.submitButton.disabled = true;
-        // } 
 
-    // 2nd way - disable button wiht the boolean value of an empty string
-    // In JS - an empty string is coerced to FALSE
-    // use ! to set the opposite value
+/* 
+PREVENT USER FROM SUBMITTING AN EMPTY INPUT ---> 
+
+2 METHODS:
+
+   1st method - use an if statment when input value is an empty string... disable button
+        -if (this.searchTerm === '') {
+            this.submitButton.disabled = true;
+        }
+    2nd method - disable submit button when the value of user input is empty using STRING COERCION
+        -In JS - an empty string is coerced to FALSE
+        -Use '!' to set the opposite value
+        -SEE BELOW...
+*/
         this.submitButton.disabled = !this.searchTerm;
+
+        // Add event listener when user submits the form 
         this.form = document.querySelector('form');
         this.form.addEventListener('submit', () => this.handleSubmit(event));
     }
@@ -47,16 +54,27 @@ class Form {
         event.preventDefault();
         // Axios will make a GET for a specific URL
         // Will return a PROMISE 
-        // PROMISE = guarentee a value will be retunred
+        // PROMISE = guarentee a value will be retunred at some point
         axios
             .get(this.API_URL) 
             // callback function
+            // 'res' is the results from API call SEE LINE BELOW
             // .then(res => console.log(res.data));
+            // What if we only want a specific 'data' from our 'res'?
+            // Can achieve this using DESTRUCTURING (SEE BELOW)
+            // wrap 'data' object in curly brackets
             .then(({ data }) => this.addCard(data))
             // catches users that are invalid and returns an error 
-            .catch(err => console.error('Promise rejected', err))
+            // lets developers customize error message to user
+            .catch(err => console.error('Promise rejected', err));
+            // Need to remove user input once user submits the form
+            // this.
+            this.form.reset();
         console.log(event);
         // removes text from input when user hits submt button
+        // can use... this.searchTerm = '';
+        // or below...
+        // add the reset() method to the form, this will remove any text from the input
         this.form.reset();
     }
 }

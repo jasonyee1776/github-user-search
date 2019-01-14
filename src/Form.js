@@ -7,8 +7,10 @@ const API_URL = 'https://api.github.com/users'
 // create a JavaScript Class using ES6
 class Form {
     // constructor() is a method that you can call on ES6 classes
-    constructor(addCard) {
+    // Passing App class methods - addCard() and clearCards() - as parameter of the Form class constructor() method
+    constructor(addCard, clearCards) {
         this.addCard = addCard;
+        this.clearCards = clearCards;
         this.API_URL = '';
         this.searchTerm = '';
         // to create a variable...
@@ -34,6 +36,11 @@ PREVENT USER FROM SUBMITTING AN EMPTY INPUT --->
         -SEE BELOW...
 */
         this.submitButton.disabled = !this.searchTerm;
+
+        // Add event listener when user clicks the 'clear' button
+        // Calls the clearCards() method when users clciks on the clear button
+        this.clearButton = document.querySelector("button[type='button']");
+        this.clearButton.addEventListener('click', () => this.clearCards());
 
         // Add event listener when user submits the form 
         this.form = document.querySelector('form');
@@ -66,7 +73,7 @@ PREVENT USER FROM SUBMITTING AN EMPTY INPUT --->
             .then(({ data }) => this.addCard(data))
             // catches users that are invalid and returns an error 
             // lets developers customize error message to user
-            .catch(err => console.error('Promise rejected', err));
+            .catch(err => this.formatError('Promise rejected!', err));
             // Need to remove user input once user submits the form
             // this.
             this.form.reset();
@@ -76,6 +83,18 @@ PREVENT USER FROM SUBMITTING AN EMPTY INPUT --->
         // or below...
         // add the reset() method to the form, this will remove any text from the input
         this.form.reset();
+    }
+
+    formatError(err) {
+        console.error(err);
+        const errorText = document.createElement('p');
+        errorText.style.color = 'red';
+        errorText.style.fontWeight = 'bold';
+        errorText.style.fontSize = '1.5em';
+        errorText.innerText = 'No user found';
+        this.form.appendChild(errorText);
+        // to remove error text from DOM
+        setTimeout(() => this.form.removeChild(errorText), 5000);
     }
 }
 

@@ -5,7 +5,10 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "webpack",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --open && npm run watch"
   },
